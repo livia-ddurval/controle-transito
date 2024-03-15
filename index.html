@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Semáforo</title>
+</head>
+<body>
+    <div id="imagem">
+    </div>
+ 
+    <script>
+        function carregarImagem() {
+            fetch('https://niloweb.com.br/transit-room/api/reg_endpoint.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0 && data[0].res && data[0].dia) {
+                        const imagem = document.createElement('img');
+                        const condition = data[0].res;
+                        switch(condition) {
+                            case 'A':
+                                imagem.src = "image/tarde1.png"; 
+                                break;
+                            case 'B':
+                                imagem.src = "image/noite1.png"; 
+                                break;
+                            case 'L':
+                                imagem.src = "image/dia1.png"; 
+                                break;
+                            default:
+                                console.error('Condição desconhecida:', condition);
+                        }
+                        document.getElementById('imagem').appendChild(imagem);
+                    } else {
+                        console.error('Erro ao carregar imagem da API.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao conectar à API:', error);
+                });
+        }
+        window.onload = carregarImagem;
+    </script>
+</body>
+</html>
