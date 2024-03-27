@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav>
+        <h1>Dashboard</h1> 
+    </nav>
+    <div id="fila-transito" class="lista-transito"></div>
+    <script>
+        function carregarFilaTransito() {
+            fetch('https://niloweb.com.br/transit-room/api/reg_endpoint_all.php')
+                .then(response => response.json())
+                .then(data => {
+                    const listaTransito = document.getElementById('fila-transito');
+                    listaTransito.innerHTML = '';
+                    
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                        const listItem = document.createElement('div');
+                        listItem.classList.add('item-transito');
+                        listItem.setAttribute('data-estado', item.res); 
+                        listItem.innerHTML = `
+                            <div><strong>Resultado:</strong> ${item.res}</div>
+                            <div><strong>Dia:</strong> ${item.dia}</div>
+                            <div><strong>Nome Completo:</strong> ${item.nome} ${item.sobrenome}</div>
+                            <div><strong>Hora:</strong> ${item.hora}</div>
+                            <div><strong>Data:</strong> ${item.data}</div>
+                            <div><strong>Motivo:</strong> ${item.motivo}</div>
+                        `;
+                        listaTransito.appendChild(listItem);
+                    });
+                    } else {
+                        listaTransito.innerHTML = '<p>Não há dados disponíveis</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar dados da fila de trânsito:', error);
+                });
+        }
+
+        window.onload = function() {
+            carregarFilaTransito();
+            setInterval(carregarFilaTransito, 5000); 
+        };
+        
+    </script>
+</body>
+</html>

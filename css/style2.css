@@ -3,8 +3,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Red Hat Display", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
 }
 
 body {
@@ -14,33 +12,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#container {
-    text-align: center; 
-    position: absolute;
-    bottom: 0px;
-}
-
-.status-img {
-    max-width: 100%; 
-    height: auto; 
-}
-
-#fila-transito {
-    display: flex;
-    flex-wrap: nowrap; /* Impede que os itens sejam quebrados em várias linhas */
-    overflow-x: auto; /* Adiciona uma barra de rolagem horizontal se necessário */
-    gap: 20px; /* Espaçamento entre os itens */
-    padding: 10px; /* Espaçamento interno */
-}
-
-.item-transito {
-    flex: 0 0 auto; /* Impede que os itens diminuam de tamanho */
-    min-width: 200px; /* Largura mínima dos itens */
-    background-color: #f2f2f2; /* Cor de fundo dos itens */
-    padding: 10px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredondadas */
+    background: rgb(109,155,237);
+    background: radial-gradient(circle, rgba(109,155,237,1) 0%, rgba(189,119,232,1) 88%);
 }
 
 .texto {
@@ -50,35 +23,59 @@ body {
     animation: pulseText 2s infinite alternate;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0; /* Começa transparente */
-        transform: scale(0.1); /* Começa pequeno */
-    }
-    to {
-        opacity: 1; /* Torna-se visível */
-        transform: scale(1); /* Torna-se grande */
-    }
+nav {
+    position: fixed; 
+    top: 0;
+    padding: 10px 0; 
+    width: 100%; 
+    text-align: center; 
+    color: black;
 }
 
-#anjo {
-    width: 100px; /* Começa com tamanho pequeno */
-    height: auto;
-    animation: fadeIn 1s ease forwards; /* Aplica a animação fadeIn */
-    animation-delay: 1s; /* Delay para que a animação comece após 1 segundo */
+nav h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+#fila-transito {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+}
+
+.item-transito {
+    flex: 0 0 auto;
+    min-width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+
+.item-transito[data-estado="A"] {
+    background-color: rgb(255, 255, 126);
+}
+
+.item-transito[data-estado="B"] {
+    background-color: rgb(248, 90, 90);
+}
+
+.item-transito[data-estado="L"] {
+    background-color: rgb(114, 250, 114);
 }
 
 @keyframes pulseText {
     0% {
-        transform: scale(1); 
+        transform: scale(1);
     }
     100% {
-        transform: scale(1.2); 
+        transform: scale(1.2);
     }
 }
 
 @media screen and (min-width: 1200px) {
     .status-img {
-        max-width: 50%; 
+        max-width: 50%;
     }
 }
